@@ -11,16 +11,16 @@ PrintResult(GetSlicedArray(array, GetMinDigitIndex(array))); //...Матрешк
 
 int[] GetMinDigitIndex(int[,] array) //...Найдем индекс минимального числа в исходном массиве
 {
-    int tmp = array[0,0];
+    int minDigit = array[0,0];
     int[] minDigitIndex = new int[2];
     
     for (int i=0; i<array.GetLength(0); i++)
     {
     	for (int j=0; j<array.GetLength(1); j++)
     	{
-    		if (array[i,j]<tmp)
+    		if (array[i,j]<minDigit)
     		{
-    			tmp = array[i,j];
+    			minDigit = array[i,j];
     			minDigitIndex[0] = i;
     			minDigitIndex[1] = j;
     		}
@@ -35,21 +35,19 @@ int[,] GetSlicedArray(int[,] array, int[] minDigitIndex) //...Порежем и�
     int newRow = 0, newCol;
     for (int i=0; i<array.GetLength(0); i++)
     {
-    	if (i==minDigitIndex[0]) //...Пропускаем индекс строки с минимальным числом
+    	if (i!=minDigitIndex[0]) //...Пропускаем индекс строки с минимальным числом
     	{
-    	    continue;
-    	}
-    	newCol = 0;
-    	for (int j=0; j<array.GetLength(1); j++)
-    	{
-    		if (j==minDigitIndex[1]) //...Пропускаем индекс столбца с минимальным числом
-    		{
-    		    continue;
-    		}
-    		slicedArray[newRow,newCol] = array[i,j];
-    		newCol++;
-    	}
-    	newRow++;
+	    	newCol = 0;
+	    	for (int j=0; j<array.GetLength(1); j++)
+	    	{
+	    		if (j!=minDigitIndex[1]) //...Пропускаем индекс столбца с минимальным числом
+	    		{
+		    		slicedArray[newRow,newCol] = array[i,j];
+		    		newCol++;
+			}
+	    	}
+	    	newRow++;
+	}
     }
     return slicedArray; //...Возвращаем порезанный массив
 }
